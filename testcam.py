@@ -17,6 +17,6 @@ camera_setup(camera)
 while True:
 	timestamp=time.strftime("%Y%m%d%H%M%S")
 	camera.capture(set_name+"/"+set_name+"_"+timestamp+".jpg")
-	print "Picture Taken! See {0}_{1}.jpg!".format(set_name,timestamp)
+	print "Foto fatta {0}_{1}.jpg!"+format(set_name,timestamp)
 	time.sleep(3)
 
