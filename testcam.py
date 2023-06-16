@@ -1,24 +1,18 @@
-#from PIL import Image
 from picamera import PiCamera
-import RPi.GPIO as GPIO
-import time
-import sys
+from time import sleep
 
-print(1)
+# Initialize the camera
 camera = PiCamera()
-print(2)
-set_name = sys.argv[1]
-print(3)
-def camera_setup(camera):
-	camera.color_effects = (128,128)
-	camera.rotation = 90
-	camera.resolution = (300,100)
-print(4)
-camera_setup(camera)
-print(5)
 
-timestamp=time.strftime("%Y%m%d%H%M%S")
-camera.capture(set_name+"/"+set_name+"_"+timestamp+".jpg")
-print("Picture Taken! See {0}_{1}.jpg!"+format(set_name,timestamp))
+# Adjust camera settings if needed
+camera.resolution = (1280, 720)  # Set the resolution (width, height)
+camera.rotation = 180           # Rotate the image (in degrees)
 
-print(6)
+# Wait for the camera to warm up
+sleep(2)
+
+# Capture an image
+camera.capture('/home/pi/image.jpg')  # Specify the output file path
+
+# Release the camera resources
+camera.close()
