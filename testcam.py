@@ -1,18 +1,23 @@
-from picamera import PiCamera
-from time import sleep
+import cv2
 
-# Initialize the camera
-camera = PiCamera()
+# Initialize the USB camera
+camera = cv2.VideoCapture(0)  # Use index 0 for the first USB camera
 
-# Adjust camera settings if needed
-camera.resolution = (1280, 720)  # Set the resolution (width, height)
-camera.rotation = 180           # Rotate the image (in degrees)
+# Check if the camera is opened successfully
+if not camera.isOpened():
+    print("Failed to open the camera")
+    exit()
 
-# Wait for the camera to warm up
-sleep(2)
+# Capture a frame from the camera
+ret, frame = camera.read()
 
-# Capture an image
-camera.capture('/home/pi/image.jpg')  # Specify the output file path
+# Check if the frame was captured successfully
+if not ret:
+    print("Failed to capture frame")
+    exit()
+
+# Save the captured frame as an image file
+cv2.imwrite('image.jpg', frame)
 
 # Release the camera resources
-camera.close()
+camera.release()
