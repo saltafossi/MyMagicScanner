@@ -1,47 +1,30 @@
-import pygame
 import pygame.camera
+import pygame.image
 
-# Initialize Pygame and the camera module
-pygame.init()
-pygame.camera.init()
+def capture_image(camera_device, output_path):
+    pygame.camera.init()
+    cameras = pygame.camera.list_cameras()
 
-# Get a list of available cameras
-cam_list = pygame.camera.list_cameras()
+    if camera_device not in cameras:
+        print(f"Camera device '{camera_device}' not found.")
+        return
 
-if not cam_list:
-    print("No cameras found.")
-    exit()
+    cam = pygame.camera.Camera(camera_device, (640, 480))
+    cam.start()
 
-# Create a camera object
-cam = pygame.camera.Camera(cam_list[0])
-
-# Start the camera
-cam.start()
-
-# Set the desired resolution
-width, height = 640, 480
-cam.set_resolution(width, height)
-
-# Initialize the Pygame display
-screen = pygame.display.set_mode((width, height))
-
-# Main loop for capturing and displaying frames
-running = True
-while running:
-    # Capture a frame from the camera
     image = cam.get_image()
+    pygame.image.save(image, output_path)
 
-    # Display the frame on the screen
-    screen.blit(image, (0, 0))
-    pygame.display.flip()
+    cam.stop()
+    pygame.camera.quit()
 
-    # Check for events
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
+    print(f"Image saved to: {output_path}")
 
-# Stop the camera
-cam.stop()
+# Set the camera device (change this according to your setup)
+camera_device = "/dev/video0"
 
-# Quit Pygame
-pygame.quit()
+# Set the output path for the captured image
+output_path = "captured_image.jpg"
+
+# Capture and save the image
+capture_image(camera_device, output_path)
