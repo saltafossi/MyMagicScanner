@@ -30,7 +30,7 @@ def capture_image(camera_device, output_path):
 camera_device = "/dev/video0"
 
 # Set the output path for the captured image
-output_path = "captured_image.bmp"
+output_path = "captured_image.jpg"
 
 # Capture and save the image
 capture_image(camera_device, output_path)
