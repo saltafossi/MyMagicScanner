@@ -1,5 +1,7 @@
 import pygame.camera
 import pygame.image
+from PIL import Image 
+
 
 def capture_image(camera_device, output_path):
     pygame.camera.init()
@@ -13,7 +15,11 @@ def capture_image(camera_device, output_path):
     cam.start()
 
     image = cam.get_image()
-    pygame.image.save(image, output_path)
+    #pygame.image.save(image, output_path)
+    data = pygame.image.tostring(image, 'RGB')
+    pil_img = Image.frombytes('RGB', image.get_size(), data)
+    pil_img.save(output_path)
+    pil_img.close
 
     cam.stop()
     pygame.camera.quit()
