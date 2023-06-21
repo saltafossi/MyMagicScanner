@@ -1,22 +1,36 @@
-from PIL import Image
-from picamera import PiCamera
-import RPi.GPIO as GPIO
-import time
-import sys
+import pygame.camera
+import pygame.image
+from PIL import Image 
 
-camera = PiCamera()
-set_name = sys.argv[1]
 
-def camera_setup(camera):
-	camera.color_effects = (128,128)
-	camera.rotation = 90
-	camera.resolution = (300,100)
+def capture_image(camera_device, output_path):
+    pygame.camera.init()
+    cameras = pygame.camera.list_cameras()
 
-camera_setup(camera)
+    if camera_device not in cameras:
+        print(f"Camera device '{camera_device}' not found.")
+        return
 
-while True:
-	timestamp=time.strftime("%Y%m%d%H%M%S")
-	camera.capture(set_name+"/"+set_name+"_"+timestamp+".jpg")
-	print "Picture Taken! See {0}_{1}.jpg!".format(set_name,timestamp)
-	time.sleep(3)
+    cam = pygame.camera.Camera(camera_device, (640, 480))
+    cam.start()
 
+    image = cam.get_image()
+    #pygame.image.save(image, output_path)
+    data = pygame.image.tostring(image, 'RGB')
+    pil_img = Image.frombytes('RGB', image.get_size(), data)
+    pil_img.save(output_path)
+    pil_img.close
+
+    cam.stop()
+    pygame.camera.quit()
+
+    print(f"Image saved to: {output_path}")
+
+# Set the camera device (change this according to your setup)
+camera_device = "/dev/video0"
+
+# Set the output path for the captured image
+output_path = "captured_image.jpg"
+
+# Capture and save the image
+capture_image(camera_device, output_path)
