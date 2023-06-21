@@ -1,36 +1,31 @@
 import RPi.GPIO as GPIO
 import time
 
-# Set the GPIO mode to BCM
+servoPIN = 24
 GPIO.setmode(GPIO.BCM)
+GPIO.setup(servoPIN, GPIO.OUT)
 
-# Define the GPIO pin used for the servo
-servo_pin = 24
-
-# Set up the GPIO pin for output
-GPIO.setup(servo_pin, GPIO.OUT)
-
-# Create a PWM instance with frequency 50Hz
-pwm = GPIO.PWM(servo_pin, 50)
-
-# Start PWM with 0% duty cycle (servo at 0 degrees)
-pwm.start(0)
-
+p = GPIO.PWM(servoPIN, 50) # GPIO 24 for PWM with 50Hz
+p.start(0) # Initialization
+time.sleep(2)
 try:
-    while True:
-        # Move the servo to 0 degrees
-        pwm.ChangeDutyCycle(2.5)
-        time.sleep(1)
-        
-        # Move the servo to 90 degrees
-        pwm.ChangeDutyCycle(7.5)
-        time.sleep(1)
-        
-        # Move the servo to 180 degrees
-        pwm.ChangeDutyCycle(12.5)
-        time.sleep(1)
-
+  while True:
+    p.ChangeDutyCycle(5)
+    time.sleep(0.5)
+    p.ChangeDutyCycle(7.5)
+    time.sleep(0.5)
+    p.ChangeDutyCycle(10)
+    time.sleep(0.5)
+    p.ChangeDutyCycle(12.5)
+    time.sleep(0.5)
+    p.ChangeDutyCycle(10)
+    time.sleep(0.5)
+    p.ChangeDutyCycle(7.5)
+    time.sleep(0.5)
+    p.ChangeDutyCycle(5)
+    time.sleep(0.5)
+    p.ChangeDutyCycle(2.5)
+    time.sleep(0.5)
 except KeyboardInterrupt:
-    # Stop PWM and clean up GPIO
-    pwm.stop()
-    GPIO.cleanup()
+  p.stop()
+  GPIO.cleanup()
