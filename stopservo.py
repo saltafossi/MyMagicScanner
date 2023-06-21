@@ -13,5 +13,6 @@ GPIO.setup(servo_pin, GPIO.OUT)
 # Create a PWM instance with frequency 50Hz
 pwm = GPIO.PWM(servo_pin, 50)
 
+pwm.start(0)
 pwm.stop()
 GPIO.cleanup()
