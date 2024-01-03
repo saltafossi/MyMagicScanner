@@ -15,7 +15,7 @@ pwm = GPIO.PWM(servo_pin, 50)
 
 pwm.start(0)
 time.sleep(1)
-pwm.ChangeDutyCycle(7.5)
+pwm.ChangeDutyCycle(15)
 time.sleep(1)
 pwm.ChangeDutyCycle(0)
 pwm.stop()
