@@ -14,5 +14,8 @@ GPIO.setup(servo_pin, GPIO.OUT)
 pwm = GPIO.PWM(servo_pin, 50)
 
 pwm.start(0)
+time.sleep(2)
+pwm.ChangeDutyCycle(0)
+time.sleep(0.5)
 pwm.stop()
 GPIO.cleanup()
