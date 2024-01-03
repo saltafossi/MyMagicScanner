@@ -10,11 +10,10 @@ p.start(0) # Initialization
 time.sleep(2)
 try:
   while True:
-    p.ChangeDutyCycle(0)
+    p.ChangeDutyCycle(13.5)
     time.sleep(2)
     p.ChangeDutyCycle(6.9)
     time.sleep(2)
-    p.ChangeDutyCycle(13.5)
 except KeyboardInterrupt:
   time.sleep(0.5)
   p.ChangeDutyCycle(0)
