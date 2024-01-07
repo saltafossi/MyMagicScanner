@@ -11,7 +11,8 @@ def capture_image(camera_device, output_path):
         print(f"Camera device '{camera_device}' not found.")
         return
 
-    cam = pygame.camera.Camera(camera_device, (640, 480))
+    #cam = pygame.camera.Camera(camera_device, (640, 480))
+    cam = pygame.camera.Camera(camera_device, (1280, 960))
     cam.start()
 
     image = cam.get_image()
